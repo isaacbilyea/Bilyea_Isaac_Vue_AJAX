@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/main.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="module" src="js/main.js"></script>
     <title>Dad Vs. AI</title>
 </head>
@@ -16,7 +17,7 @@
         <div id="score">Score: 0 / 0</div>
     </header>
 
-    <main>
+    <main id="app">
         <div id="joke-container">
             <p id="joke-text">Click the button to get a joke!</p>
             <button id="joke-btn">Tell me a joke!</button>
