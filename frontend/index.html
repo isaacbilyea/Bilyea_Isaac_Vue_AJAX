@@ -6,11 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/main.css" rel="stylesheet">
     <script type="module" src="js/main.js"></script>
-    <title>Title</title>
+    <title>Dad Vs. AI</title>
 </head>
 
 <body>
+    <header id="main-header">
+        <h1>Dad vs AI Jokes</h1>
+        <p>Can you tell the difference between Dad jokes and AI-generated jokes?</p>
+        <div id="score">Score: 0 / 0</div>
+    </header>
 
+    <main>
+        <div id="joke-container">
+            <p id="joke-text">Click the button to get a joke!</p>
+            <button id="joke-btn">Tell me a joke!</button>
+        </div>
+
+        <div id="guess-container">
+            <h2>Is this a...</h2>
+            <div id="button-group">
+                <button id="dad-btn">Dad Joke</button>
+                <button id="ai-btn">AI Joke</button>
+            </div>
+        </div>
+
+        <div id="result-container">
+            <h2 id="result-text"></h2>
+            <p id="joke-type"></p>
+            <button id="next-btn">Next Joke</button>
+        </div>
+    </main>
 </body>
 
 </html>
