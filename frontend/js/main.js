@@ -13,7 +13,7 @@ const app = Vue.createApp({
     data() {
         return {
             jokesData: [],
-            joke: '',
+            currentJoke: '',
             loadingJokes: true,
             loading: false,
         }
@@ -35,6 +35,13 @@ const app = Vue.createApp({
             })
             .then(document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'end'}))
             .catch(error => console.error(error));
+        },
+        getRandomJoke() {
+
+            const randomIndex = Math.floor(Math.random() * this.jokesData.length);
+            const randomJoke = this.jokesData[randomIndex];
+            
+            this.currentJoke = randomJoke.joke;
         }
     }
 

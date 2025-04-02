@@ -19,8 +19,8 @@
 
     <main id="app">
         <div id="joke-container">
-            <p id="joke-text">Click the button to get a joke!</p>
-            <button id="joke-btn">Tell me a joke!</button>
+            <p id="joke-text">{{ currentJoke || 'Click the button to get a joke!' }}</p>
+            <button id="joke-btn" @click="getRandomJoke">Tell me a joke!</button>
         </div>
 
         <div id="guess-container">
