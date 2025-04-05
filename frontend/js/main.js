@@ -14,8 +14,11 @@ const app = Vue.createApp({
         return {
             jokesData: [],
             currentJoke: '',
+            currentJokeType: '',
             loadingJokes: true,
             loading: false,
+            guessResult: '',
+            showResult: false
         }
     },
     methods: {
@@ -37,11 +40,30 @@ const app = Vue.createApp({
             .catch(error => console.error(error));
         },
         getRandomJoke() {
-
+            if (this.jokesData.length === 0) {
+                this.currentJoke = "Loading jokes... Please wait.";
+                return;
+            }
+            
             const randomIndex = Math.floor(Math.random() * this.jokesData.length);
             const randomJoke = this.jokesData[randomIndex];
             
             this.currentJoke = randomJoke.joke;
+            this.currentJokeType = randomJoke.category === 'Dad' ? 'Dad' : 'AI';
+            this.showResult = false;
+            
+        },
+        makeGuess(guessType) {
+            if (guessType.toLowerCase() === this.currentJokeType.toLowerCase()) {
+                this.guessResult = 'Correct!';
+            } else {
+                this.guessResult = 'Wrong!';
+            }
+            
+            this.showResult = true;
+        },
+        nextJoke() {
+            this.getRandomJoke();
         }
     }
 

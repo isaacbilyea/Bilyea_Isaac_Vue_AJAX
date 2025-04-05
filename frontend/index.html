@@ -23,18 +23,18 @@
             <button id="joke-btn" @click="getRandomJoke">Tell me a joke!</button>
         </div>
 
-        <div id="guess-container">
+        <div id="guess-container" v-if="currentJoke && !showResult">
             <h2>Is this a...</h2>
             <div id="button-group">
-                <button id="dad-btn">Dad Joke</button>
-                <button id="ai-btn">AI Joke</button>
+                <button id="dad-btn" @click="makeGuess('dad')">Dad Joke</button>
+                <button id="ai-btn" @click="makeGuess('ai')">AI Joke</button>
             </div>
         </div>
 
-        <div id="result-container">
-            <h2 id="result-text"></h2>
-            <p id="joke-type"></p>
-            <button id="next-btn">Next Joke</button>
+        <div id="result-container" v-if="showResult">
+            <h2 id="result-text">{{ guessResult }}</h2>
+            <p id="joke-type">It was a {{ currentJokeType }} joke!</p>
+            <button id="next-btn" @click="nextJoke">Next Joke</button>
         </div>
     </main>
 </body>
