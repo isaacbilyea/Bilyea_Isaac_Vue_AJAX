@@ -15,12 +15,32 @@ html, body {
     position: relative;
     line-height: 1.5;
     z-index: 0;
+    font-size: 18px;
+}
+
+body {
+
+    &::before {
+        content: '';
+        background-image: url('../images/background.png');
+        background-position: center center;
+        background-size: contain;       
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        opacity: 0.5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
 }
 
 @media screen and (min-width: 768px) {
 
     html, body {
-        font-size: 16px;
+        font-size: 20px;
     }
 
 }
@@ -28,8 +48,7 @@ html, body {
 @media screen and (min-width: 1200px) {
 
     html, body {
-        font-size: 18px;
+        font-size: 22px;
     }
 
 }
-    
