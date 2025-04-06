@@ -1,6 +1,5 @@
 @use '../abstracts' as *;
 
-
 #score {
     font-size: 1.2rem;
     margin-top: 1rem;
@@ -13,18 +12,50 @@
     text-align: center;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-left: 5px solid $secondary-color;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-5px);
+    }
 }
 
 #joke-text {
     font-size: 1.25rem;
     line-height: 1.5;
     margin-bottom: 2rem;
+    min-height: 4.5rem;
+    font-family: $body-font-family;
 }
 
 #guess-container {
     text-align: center;
     margin: 2rem auto;
+    max-width: 600px;
+    min-height: 150px; /* Ensure consistent height between states */
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    
+    h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        position: relative;
+        display: inline-block;
+        
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background-color: $secondary-color;
+        }
+    }
 }
 
 #button-group {
@@ -34,16 +65,51 @@
     margin-top: 1rem;
 }
 
-#result-container {
-    text-align: center;
-    margin: 2rem auto;
+#joke-btn, #next-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: $secondary-color;
+    color: $primary-color;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
 }
 
-// button {
-//     padding: 0.75rem 1.5rem;
-//     border: none;
-//     border-radius: 4px;
-//     cursor: pointer;
-//     font-size: 1rem;
-//     transition: all 0.3s ease;
-// }
+#dad-btn, #ai-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+#dad-btn {
+    background-color: #4a6fa5;
+    color: white;
+}
+
+#ai-btn {
+    background-color: #6a4ca5;
+    color: white;
+}
+
+#result-text {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+#joke-type {
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}

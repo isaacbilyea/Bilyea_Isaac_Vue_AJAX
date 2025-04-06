@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/TextPlugin.min.js"></script>
     <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="module" src="js/main.js"></script>
     <title>Dad Vs. AI</title>
@@ -15,39 +17,33 @@
 
 <body>
     <main id="app">
-        <div id="landing-container">
+        <div id="landing-container" :class="{ 'game-active': showGame }">
             <h1>DAD VS AI</h1>
-            <div id="button-container">
-                <button class="landing-btn">TELL ME A JOKE</button>
+            <div id="button-container" v-if="!showGame">
+                <button class="landing-btn" @click="startGame">TELL ME A JOKE</button>
                 <button class="landing-btn">VIEW ALL JOKES</button>
             </div>
         </div>
 
-        <!-- <header id="main-header">
-            <h1>Dad vs AI Jokes</h1>
-            <p>Can you tell the difference between Dad jokes and AI-generated jokes?</p>
-            <div id="score">Score: 0 / 0</div>
-        </header>
+        <div id="game-content" v-if="showGame">
+            <div id="joke-container">
+                <p id="joke-text">{{ currentJoke }}</p>
+            </div>
 
-        <div id="joke-container">
-            <p id="joke-text">{{ currentJoke || 'Click the button to get a joke!' }}</p>
-            <button id="joke-btn" @click="getRandomJoke">Tell me a joke!</button>
-        </div>
+            <div id="guess-container">
+                <h2 v-if="!showResult">Is this a...</h2>
+                <div v-if="!showResult" id="button-group">
+                    <button id="dad-btn" @click="makeGuess('dad')">Dad Joke 👨</button>
+                    <button id="ai-btn" @click="makeGuess('ai')">AI Joke 🤖</button>
+                </div>
 
-        <div id="guess-container" v-if="currentJoke && !showResult">
-            <h2>Is this a...</h2>
-            <div id="button-group">
-                <button id="dad-btn" @click="makeGuess('dad')">Dad Joke 👨</button>
-                <button id="ai-btn" @click="makeGuess('ai')">AI Joke 🤖</button>
+                <div v-if="showResult">
+                    <h2 id="result-text">{{ guessResult }}</h2>
+                    <p id="joke-type">It was a {{ currentJokeType }} joke!</p>
+                    <button id="next-btn" @click="nextJoke">Next Joke</button>
+                </div>
             </div>
         </div>
-
-        <div id="result-container" v-if="showResult">
-            <h2 id="result-text">{{ guessResult }}</h2>
-            <p id="joke-type">It was a {{ currentJokeType }} joke!</p>
-            <button id="next-btn" @click="nextJoke">Next Joke</button>
-        </div> -->
-
     </main>
 </body>
 
