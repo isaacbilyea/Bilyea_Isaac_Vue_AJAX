@@ -25,6 +25,7 @@ const app = Vue.createApp({
     methods: {
         startGame() {
             this.showGame = true;
+            document.body.classList.add('game-active');
                 
             const randomIndex = Math.floor(Math.random() * this.jokesData.length);
             const randomJoke = this.jokesData[randomIndex];
@@ -57,19 +58,21 @@ const app = Vue.createApp({
             .catch(error => console.error(error));
         },
         getRandomJoke() {
-
             const randomIndex = Math.floor(Math.random() * this.jokesData.length);
             const randomJoke = this.jokesData[randomIndex];
             
-            this.currentJoke = "";
             this.currentJokeType = randomJoke.category === 'Dad' ? 'Dad' : 'AI';
             this.showResult = false;
             
-            gsap.to("#joke-text", {
+            const tl = gsap.timeline();
+            tl.to("#joke-text", {
+                duration: 0.5,
+                text: "",
+                ease: "none"
+            }).to("#joke-text", {
                 duration: 1.5,
                 text: randomJoke.joke,
-                ease: "none",
-                delay: 0.3
+                ease: "none"
             });
         },
         makeGuess(guessType) {
@@ -79,9 +82,12 @@ const app = Vue.createApp({
                 this.guessResult = 'Wrong!';
             }
             
+            document.body.classList.remove('dad-reveal', 'ai-reveal');
+            document.body.classList.add(`${this.currentJokeType.toLowerCase()}-reveal`);
             this.showResult = true;
         },
         nextJoke() {
+            document.body.classList.remove('dad-reveal', 'ai-reveal');
             this.getRandomJoke();
         }
     }

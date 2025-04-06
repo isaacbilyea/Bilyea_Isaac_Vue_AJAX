@@ -9,6 +9,7 @@ img, embed, object, video, picture {
 html, body {
     height: 100%;
     min-height: 100vh;
+    max-height: 100vh;
     margin: 0;
     box-sizing: border-box; 
     scroll-behavior: smooth;
@@ -19,21 +20,47 @@ html, body {
 }
 
 body {
+    padding: 1rem;
+    background-image: url('../images/background.png');
+    background-position: center center;
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-image 1s ease;
 
-    &::before {
+    &::before, &::after {
         content: '';
-        background-image: url('../images/background.png');
-        background-position: center center;
-        background-size: contain;       
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        opacity: 0.5;
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
         bottom: 0;
+        background: white;
+        opacity: 0.5;
         z-index: -1;
+        transition: opacity 0.3s ease;
+    }
+
+    &::before {
+        left: 0;
+        right: 50%;
+    }
+
+    &::after {
+        left: 50%;
+        right: 0;
+    }
+
+    &.game-active {
+        background-image: url('../images/background2.png');
+        background-position: bottom center;
+        background-size: contain;
+    }
+
+    &.game-active.dad-reveal::before {
+        opacity: 0;
+    }
+
+    &.game-active.ai-reveal::after {
+        opacity: 0;
     }
 }
 
