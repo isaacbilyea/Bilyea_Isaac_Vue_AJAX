@@ -1,2 +1,40 @@
 @use '../abstracts' as a;
 
+#landing-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    h1 {
+        font-size: 3rem;
+        margin: 0;
+    }
+}
+
+#button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.landing-btn {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    min-width: 200px;
+    cursor: pointer;
+    background-color: a.$secondary-color;
+    color: a.$primary-color;
+    border: none;
+
+    font-family: a.$body-font-family;
+}
+
+@media screen and (min-width: 768px) {
+    #button-container {
+        flex-direction: row;
+        gap: 2rem;
+    }
+}

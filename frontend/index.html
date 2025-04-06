@@ -5,19 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/main.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="module" src="js/main.js"></script>
     <title>Dad Vs. AI</title>
 </head>
 
 <body>
-    <header id="main-header">
-        <h1>Dad vs AI Jokes</h1>
-        <p>Can you tell the difference between Dad jokes and AI-generated jokes?</p>
-        <div id="score">Score: 0 / 0</div>
-    </header>
-
     <main id="app">
+        <div id="landing-container">
+            <h1>DAD VS AI</h1>
+            <div id="button-container">
+                <button class="landing-btn">TELL ME A JOKE</button>
+                <button class="landing-btn">VIEW ALL JOKES</button>
+            </div>
+        </div>
+
+        <!-- <header id="main-header">
+            <h1>Dad vs AI Jokes</h1>
+            <p>Can you tell the difference between Dad jokes and AI-generated jokes?</p>
+            <div id="score">Score: 0 / 0</div>
+        </header>
+
         <div id="joke-container">
             <p id="joke-text">{{ currentJoke || 'Click the button to get a joke!' }}</p>
             <button id="joke-btn" @click="getRandomJoke">Tell me a joke!</button>
@@ -26,8 +37,8 @@
         <div id="guess-container" v-if="currentJoke && !showResult">
             <h2>Is this a...</h2>
             <div id="button-group">
-                <button id="dad-btn" @click="makeGuess('dad')">Dad Joke</button>
-                <button id="ai-btn" @click="makeGuess('ai')">AI Joke</button>
+                <button id="dad-btn" @click="makeGuess('dad')">Dad Joke 👨</button>
+                <button id="ai-btn" @click="makeGuess('ai')">AI Joke 🤖</button>
             </div>
         </div>
 
@@ -35,7 +46,8 @@
             <h2 id="result-text">{{ guessResult }}</h2>
             <p id="joke-type">It was a {{ currentJokeType }} joke!</p>
             <button id="next-btn" @click="nextJoke">Next Joke</button>
-        </div>
+        </div> -->
+
     </main>
 </body>
 
