@@ -26,44 +26,19 @@ class JokeController extends Controller {
      }
 
 
-    //  public function save(Request $request) {
-    //     $this->validate($request, [
-    //         'title' => 'required',
-    //         'author_id' => 'required|email',
-    //         'published_date' => 'required|date',
-    //         'book_image' => 'required'
-    //     ]);
-    //     $book = Book::create($request->all());
-    //     return response()->json($book, 201);
-    // }
+     public function save(Request $request) {
+        $this->validate($request, [
+            'joke' => 'required|string',
+            'category_id' => 'required|exists:categories,id'
+        ]);
 
+        $joke = Joke::create([
+            'joke' => $request->joke,
+            'category_id' => $request->category_id
+        ]);
 
-
-    /* public function save(Request $request) {
-         $this->validate($request, [
-             'title' => 'required',
-             'author_id' => 'required',
-             'published_date' => 'required|date',
-             'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
-         ]);
-
-         if ($request->hasFile('book_image')) {
-            $file = $request->file('book_image');
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $imagePath = $file->storeAs('images', $filename, 'public');
-         } else {
-             return response()->json(['error' => 'Image upload failed'], 400);
-         }
-
-         $book = Book::create([
-             'title' => $request->title,
-             'author_id' => $request->author_id,
-             'published_date' => $request->published_date,
-             'book_image' => $imagePath
-         ]);
-
-         return response()->json($book, 201);
-     } */
+        return response()->json($joke, 201);
+    }
     
 
     // public function update(Request $request, $id) {

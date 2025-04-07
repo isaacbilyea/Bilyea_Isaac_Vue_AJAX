@@ -21,6 +21,7 @@
 
     &.game-active {
         top: -40vh;
+        pointer-events: none;
     }
 
     #button-container {

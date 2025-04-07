@@ -21,6 +21,7 @@ $router->get('/', function () use ($router) {
 
 $router->get('/jokes', 'JokeController@getAll');
 $router->get('/jokes/{id}', 'JokeController@getOne');
+$router->post('/jokes/add', 'JokeController@save');
 
 
 

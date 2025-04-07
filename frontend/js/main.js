@@ -22,7 +22,12 @@ const app = Vue.createApp({
             showGame: false,
             showAllJokes: false,
             allJokes: [],
-            loadingAllJokes: false
+            loadingAllJokes: false,
+            showAddForm: true,
+            newJoke: {
+                joke: '',
+                category_id: '1'
+            }
         }
     },
     methods: {
@@ -103,6 +108,28 @@ const app = Vue.createApp({
             .then(data => {
                 this.allJokes = data;
                 this.loadingAllJokes = false;
+            })
+            .catch(error => console.error(error));
+        },
+        saveJoke() {
+            fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.newJoke)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // After saving, fetch the complete joke data with category
+                return fetch(`http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/${data.id}`);
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.allJokes.unshift(data[0]); 
+                this.showAddForm = false;
+                this.newJoke.joke = '';
+                this.newJoke.category_id = '1';
             })
             .catch(error => console.error(error));
         }
