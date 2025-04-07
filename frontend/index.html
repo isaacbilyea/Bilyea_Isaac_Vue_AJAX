@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <main id="app">
+    <main id="app" v-cloak>
         <div id="landing-container" :class="{ 'game-active': showGame || showAllJokes }">
             <h1>DAD VS AI</h1>
             <div id="button-container" v-if="!showGame && !showAllJokes">
@@ -26,6 +26,15 @@
         </div>
 
         <div id="all-jokes" v-if="showAllJokes">
+            <div class="add-joke-form">
+                <textarea v-model="newJoke.joke" placeholder="Enter your joke..."></textarea>
+                <select v-model="newJoke.category_id">
+                    <option value="1">Dad Joke</option>
+                    <option value="2">AI Joke</option>
+                </select>
+                <button @click="saveJoke">Add Joke</button>
+            </div>
+
             <div v-if="loadingAllJokes" class="loading">Loading...</div>
             <div v-else class="jokes-grid">
                 <div v-for="joke in allJokes" class="joke-card">

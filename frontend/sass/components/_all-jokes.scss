@@ -2,7 +2,7 @@
 
 #all-jokes {
     max-width: 1200px;
-    margin: 8rem auto;
+    margin: 4rem auto;
     padding: 2rem;
 
     .jokes-grid {
@@ -15,7 +15,6 @@
         background: white;
         padding: 1.5rem;
         border: 2px solid a.$secondary-color;
-        border-radius: 8px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
         display: flex;
@@ -38,9 +37,9 @@
             padding: 0.25rem 0.75rem;
             background: a.$secondary-color;
             color: white;
-            border-radius: 4px;
             font-size: 0.9rem;
             align-self: flex-end;
+            margin-top: auto;
         }
     }
 }
