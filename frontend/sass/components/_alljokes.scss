@@ -1,0 +1,46 @@
+@use '../abstracts' as a;
+
+#all-jokes {
+    max-width: 1200px;
+    margin: 8rem auto;
+    padding: 2rem;
+
+    .jokes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .joke-card {
+        background: white;
+        padding: 1.5rem;
+        border: 2px solid a.$secondary-color;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .joke-text {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-top: 0;
+        }
+        
+        .joke-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: a.$secondary-color;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            align-self: flex-end;
+        }
+    }
+}
