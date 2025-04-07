@@ -28,18 +28,26 @@ class JokeController extends Controller {
 
      public function save(Request $request) {
         $this->validate($request, [
-            'joke' => 'required|string',
-            'category_id' => 'required|exists:categories,id'
+            'joke' => 'required',
+            'category_id' => 'required'
         ]);
 
-        $joke = Joke::create([
-            'joke' => $request->joke,
-            'category_id' => $request->category_id
-        ]);
+        $joke = Joke::create($request->all());
 
         return response()->json($joke, 201);
     }
     
+    // public function save(Request $request) {
+    //     $this->validate($request, [
+    //         'title' => 'required',
+    //         'author_id' => 'required|email',
+    //         'published_date' => 'required|date',
+    //         'book_image' => 'required'
+    //     ]);
+    //     $book = Book::create($request->all());
+    //     return response()->json($book, 201);
+    // }
+
 
     // public function update(Request $request, $id) {
     //     $book = Book::findOrFail($id);

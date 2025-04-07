@@ -8,8 +8,6 @@ img, embed, object, video, picture {
   
 html, body {
     height: 100%;
-    min-height: 100vh;
-    max-height: 100vh;
     margin: 0;
     box-sizing: border-box; 
     scroll-behavior: smooth;
@@ -30,7 +28,7 @@ body {
 
     &::before, &::after {
         content: '';
-        position: absolute;
+        position: fixed;
         top: 0;
         bottom: 0;
         background: white;
