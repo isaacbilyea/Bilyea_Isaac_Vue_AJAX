@@ -19,7 +19,10 @@ const app = Vue.createApp({
             loading: false,
             guessResult: '',
             showResult: false,
-            showGame: false
+            showGame: false,
+            showAllJokes: false,
+            allJokes: [],
+            loadingAllJokes: false
         }
     },
     methods: {
@@ -89,6 +92,19 @@ const app = Vue.createApp({
         nextJoke() {
             document.body.classList.remove('dad-reveal', 'ai-reveal');
             this.getRandomJoke();
+        },
+        showJokes() {
+            this.loadingAllJokes = true;
+            this.showAllJokes = true;
+            this.showGame = false;
+            
+            fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes')
+            .then(response => response.json())
+            .then(data => {
+                this.allJokes = data;
+                this.loadingAllJokes = false;
+            })
+            .catch(error => console.error(error));
         }
     }
 

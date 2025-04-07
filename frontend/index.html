@@ -17,11 +17,21 @@
 
 <body>
     <main id="app">
-        <div id="landing-container" :class="{ 'game-active': showGame }">
+        <div id="landing-container" :class="{ 'game-active': showGame || showAllJokes }">
             <h1>DAD VS AI</h1>
-            <div id="button-container" v-if="!showGame">
+            <div id="button-container" v-if="!showGame && !showAllJokes">
                 <button class="landing-btn" @click="startGame">TELL ME A JOKE</button>
-                <button class="landing-btn">VIEW ALL JOKES</button>
+                <button class="landing-btn" @click="showJokes">VIEW ALL JOKES</button>
+            </div>
+        </div>
+
+        <div id="all-jokes" v-if="showAllJokes">
+            <div v-if="loadingAllJokes" class="loading">Loading...</div>
+            <div v-else class="jokes-grid">
+                <div v-for="joke in allJokes" class="joke-card">
+                    <p class="joke-text">{{ joke.joke }}</p>
+                    <span class="joke-type">{{ joke.category }}</span>
+                </div>
             </div>
         </div>
 
