@@ -1,15 +1,23 @@
 @use '../abstracts' as a;
 
-.add-joke-form {
+#add-joke-form {
     display: flex;
     gap: 1rem;
     align-items: center;
     max-width: 1200px;
-    margin-top: 3rem;
+    margin-top: 0rem;
     margin-bottom: 2rem;
     padding: 1rem;
     background: white;
     border: 2px solid a.$secondary-color;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    #add-joke-controls {
+        display: flex;
+        gap: 1rem;
+    }
 
     textarea {
         flex: 1;
@@ -20,6 +28,7 @@
         font-family: a.$body-font-family;
         line-height: 1;
         padding: 0.5rem;
+        min-width: 12rem;
 
         &:focus {
             outline: none;
