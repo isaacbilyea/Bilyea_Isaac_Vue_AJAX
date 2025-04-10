@@ -39,9 +39,21 @@
 
             <div v-if="loadingAllJokes" class="loading">Loading...</div>
             <div v-else class="jokes-grid">
-                <div v-for="joke in allJokes" class="joke-card">
+                <div v-for="joke in allJokes" class="joke-card" @click="showJokeDetail(joke)">
                     <p class="joke-text">"{{ joke.joke }}"</p>
                     <span class="joke-type">{{ joke.category }}</span>
+                </div>
+            </div>
+
+            <div id="modal" v-if="selectedJoke" @click="closeModal">
+                <div id="modal-content" @click.stop>
+                    <span id="close-button" @click="closeModal">&times;</span>
+                    <div id="modal-body">
+                        <p id="modal-joke-text">{{ selectedJoke.joke }}</p>
+                        <p id="modal-joke-category">{{ selectedJoke.category }}</p>
+                        <img :src="`images/${selectedJoke.category === 'Dad' ? 'dad.png' : 'ai.png'}`"
+                            :alt="selectedJoke.category">
+                    </div>
                 </div>
             </div>
         </div>

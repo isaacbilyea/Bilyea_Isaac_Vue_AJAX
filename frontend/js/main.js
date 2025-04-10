@@ -26,7 +26,8 @@ const app = Vue.createApp({
             newJoke: {
                 joke: '',
                 category_id: '1'
-            }
+            },
+            selectedJoke: null
         }
     },
 
@@ -142,6 +143,14 @@ const app = Vue.createApp({
                 this.newJoke.category_id = '1';
             })
             .catch(error => console.error(error));
+        },
+
+        showJokeDetail(joke) {
+            this.selectedJoke = joke;
+        },
+
+        closeModal() {
+            this.selectedJoke = null;
         }
     }
 }).mount('#app');
