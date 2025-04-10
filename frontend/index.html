@@ -25,6 +25,8 @@
             </div>
         </div>
 
+        <button v-if="showGame || showAllJokes" id="home-btn" @click="resetToLanding">HOME</button>
+
         <div id="all-jokes" v-if="showAllJokes">
             <div id="add-joke-form">
                 <textarea v-model="newJoke.joke" placeholder="Enter your joke..."></textarea>
