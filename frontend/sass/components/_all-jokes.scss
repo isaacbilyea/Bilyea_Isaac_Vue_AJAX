@@ -21,6 +21,8 @@
         flex-direction: column;
         min-height: 10rem;
         box-sizing: border-box;
+        cursor: pointer;
+        transition: transform 0.2s;
         
         &:hover {
             transform: translateY(-5px);
