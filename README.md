@@ -1,6 +1,6 @@
 # Dad vs AI - A Joke Guessing Game 🎮
 
-![Readme Photo](images/readme.png)
+![Readme Photo](frontend/images/readme.png)
 
 Welcome to Dad vs AI! This interactive web game challenges players to distinguish between Dad jokes and AI-generated jokes. Built with Vue.js and a Lumen backend API, this project showcases modern web development practices and interactive user experiences.
 
@@ -17,7 +17,6 @@ Welcome to Dad vs AI! This interactive web game challenges players to distinguis
 - **Interactive UI** 🖥️ - Smooth animations and transitions using GSAP
 - **Joke Collection** 📚 - Browse through all jokes and their sources
 - **Add New Jokes** ✍️ - Contribute your own Dad or AI-generated jokes
-- **Real-time Feedback** ✅ - Instant feedback on your guesses
 
 ## Skills 🛠️ <a name="skills"></a>
 
@@ -41,15 +40,16 @@ Here's what you'll find showcased in this project:
 
 To run this project locally:
 
-1. Clone the repository into your WAMP/MAMP www directory
+1. Clone the repository into your WAMP/MAMP directory
 2. Navigate to the backend directory and run:
+
    ```
    composer install
    ```
 3. Import the database:
    - Find the SQL file in `backend/database/jokes.sql`
    - Import it using phpMyAdmin in your WAMP/MAMP installation
-4. Access the project through your local server (e.g., http://localhost/Bilyea_Isaac_Vue_AJAX)
+4. Access the project through your local server (e.g., http://localhost/Bilyea_Isaac_Vue_AJAX/frontend)
 
 ## Usage ⚙️ <a name="usage"></a>
 
