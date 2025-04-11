@@ -135,13 +135,8 @@ const app = Vue.createApp({
         },
         
         addJoke() {
-            if (!this.newJoke.joke.trim()) {
-                this.errors = "Please enter a joke";
-                return;
-            }
-
             this.loading = true;
-            this.errors = ''; // Reset error before fetch
+            this.errors = '';
             
             fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/add', {
                 method: 'POST',
@@ -179,7 +174,7 @@ const app = Vue.createApp({
 
         showJokeDetail(joke) {
             this.loading = true;
-            this.errors = ''; // Reset error before fetch
+            this.errors = '';
             
             fetch(`http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/${joke.id}`)
             .then(response => response.json())
@@ -187,7 +182,7 @@ const app = Vue.createApp({
                 if(data.length > 0) {
                     this.selectedJoke = data[0];
                 } else {
-                    this.errors = "No joke found with the given query";
+                    this.errors = "No joke found";
                 }
                 this.loading = false;
                 
