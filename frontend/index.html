@@ -12,13 +12,16 @@
     <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/TextPlugin.min.js"></script>
     <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="module" src="js/main.js"></script>
-    <title>Dad Vs. AI</title>
+    <title>Dad vs AI</title>
 </head>
 
 <body>
     <main id="app" v-cloak>
+        <h1 class="hidden">Dad vs AI - Joke Guessing Game</h1>
+
+        <!--Landing Page-->
         <div id="landing-container" :class="{ 'active': showGame || showAllJokes }">
-            <h1 @click="resetToLanding">DAD VS AI</h1>
+            <h2 @click="resetToLanding">DAD VS AI</h2>
             <div id="button-container" v-if="!showGame && !showAllJokes">
                 <button class="landing-btn" @click="startGame">TELL ME A JOKE</button>
                 <button class="landing-btn" @click="showJokes">VIEW ALL JOKES</button>
@@ -27,7 +30,35 @@
 
         <button v-if="showGame || showAllJokes" id="back-btn" @click="resetToLanding">BACK</button>
 
+        <!--Game Page-->
+        <div id="game-content" v-if="showGame">
+            <h2 class="hidden">Joke Guessing Game</h2>
+            <div id="score-container">
+                <p>Score: {{ score }}/{{ totalGuesses }}</p>
+            </div>
+
+            <div id="joke-container">
+                <p id="joke-text">{{ currentJoke }}</p>
+            </div>
+
+            <div id="guess-container">
+                <h2 v-if="!showResult">Is this a...</h2>
+                <div v-if="!showResult" id="button-group">
+                    <button id="dad-btn" @click="makeGuess('dad')">Dad Joke 👨</button>
+                    <button id="ai-btn" @click="makeGuess('ai')">AI Joke 🤖</button>
+                </div>
+
+                <div v-if="showResult">
+                    <h2 id="result-text">{{ guessResult }}</h2>
+                    <p id="joke-type">It was a {{ currentJokeType }} joke!</p>
+                    <button id="next-btn" @click="nextJoke">Next Joke</button>
+                </div>
+            </div>
+        </div>
+
+        <!--All Jokes Page-->
         <div id="all-jokes" v-if="showAllJokes">
+            <h2 class="hidden">All Jokes Collection</h2>
             <div id="add-joke-form">
                 <textarea v-model="newJoke.joke" placeholder="Enter your joke..."></textarea>
                 <div id="add-joke-controls">
@@ -48,41 +79,17 @@
             </div>
 
             <div id="modal" v-if="selectedJoke || loading" @click="closeModal">
-                <div id="modal-content" @click.stop>
+                <div id="modal-content">
                     <span id="close-button" @click="closeModal">&times;</span>
                     <div id="modal-body">
                         <div v-if="loading" class="loading">Loading...</div>
-                        <template v-else>
+                        <div v-else>
                             <p id="modal-joke-text">{{ selectedJoke.joke }}</p>
                             <p id="modal-joke-category">{{ selectedJoke.category }}</p>
                             <img :src="`images/${selectedJoke.category === 'Dad' ? 'dad.png' : 'ai.png'}`"
                                 :alt="selectedJoke.category">
-                        </template>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="game-content" v-if="showGame">
-            <div id="score-container">
-                <p>Score: {{ score }}/{{ totalGuesses }}</p>
-            </div>
-
-            <div id="joke-container">
-                <p id="joke-text">{{ currentJoke }}</p>
-            </div>
-
-            <div id="guess-container">
-                <h2 v-if="!showResult">Is this a...</h2>
-                <div v-if="!showResult" id="button-group">
-                    <button id="dad-btn" @click="makeGuess('dad')">Dad Joke 👨</button>
-                    <button id="ai-btn" @click="makeGuess('ai')">AI Joke 🤖</button>
-                </div>
-
-                <div v-if="showResult">
-                    <h2 id="result-text">{{ guessResult }}</h2>
-                    <p id="joke-type">It was a {{ currentJokeType }} joke!</p>
-                    <button id="next-btn" @click="nextJoke">Next Joke</button>
                 </div>
             </div>
         </div>

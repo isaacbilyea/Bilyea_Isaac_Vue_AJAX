@@ -76,7 +76,7 @@ const app = Vue.createApp({
 
         makeGuess(guessType) {
             this.totalGuesses++;
-            if (guessType.toLowerCase() === this.currentJokeType.toLowerCase()) {
+            if (guessType === this.currentJokeType.toLowerCase()) {
                 this.guessResult = 'Correct!';
                 this.score++;
             } else {
