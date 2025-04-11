@@ -135,6 +135,11 @@ const app = Vue.createApp({
         },
         
         addJoke() {
+            if (this.newJoke.joke.trim() === "") {
+                this.errors = "Please enter a joke";
+                return;
+            }
+
             this.loading = true;
             this.errors = '';
             
