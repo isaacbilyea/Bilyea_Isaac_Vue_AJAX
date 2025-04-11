@@ -17,7 +17,7 @@
 
 <body>
     <main id="app" v-cloak>
-        <div id="landing-container" :class="{ 'game-active': showGame || showAllJokes }">
+        <div id="landing-container" :class="{ 'active': showGame || showAllJokes }">
             <h1 @click="resetToLanding">DAD VS AI</h1>
             <div id="button-container" v-if="!showGame && !showAllJokes">
                 <button class="landing-btn" @click="startGame">TELL ME A JOKE</button>
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <button v-if="showGame || showAllJokes" id="home-btn" @click="resetToLanding">BACK</button>
+        <button v-if="showGame || showAllJokes" id="back-btn" @click="resetToLanding">BACK</button>
 
         <div id="all-jokes" v-if="showAllJokes">
             <div id="add-joke-form">
@@ -35,7 +35,7 @@
                         <option value="1">Dad Joke</option>
                         <option value="2">AI Joke</option>
                     </select>
-                    <button @click="saveJoke">Add Joke</button>
+                    <button @click="addJoke">Add Joke</button>
                 </div>
             </div>
 
@@ -47,14 +47,17 @@
                 </div>
             </div>
 
-            <div id="modal" v-if="selectedJoke" @click="closeModal">
+            <div id="modal" v-if="selectedJoke || loading" @click="closeModal">
                 <div id="modal-content" @click.stop>
                     <span id="close-button" @click="closeModal">&times;</span>
                     <div id="modal-body">
-                        <p id="modal-joke-text">{{ selectedJoke.joke }}</p>
-                        <p id="modal-joke-category">{{ selectedJoke.category }}</p>
-                        <img :src="`images/${selectedJoke.category === 'Dad' ? 'dad.png' : 'ai.png'}`"
-                            :alt="selectedJoke.category">
+                        <div v-if="loading" class="loading">Loading...</div>
+                        <template v-else>
+                            <p id="modal-joke-text">{{ selectedJoke.joke }}</p>
+                            <p id="modal-joke-category">{{ selectedJoke.category }}</p>
+                            <img :src="`images/${selectedJoke.category === 'Dad' ? 'dad.png' : 'ai.png'}`"
+                                :alt="selectedJoke.category">
+                        </template>
                     </div>
                 </div>
             </div>
