@@ -21,7 +21,6 @@
         font-size: 1.5rem;
         position: relative;
         width: fit-content;
-    
     }
 
     #button-group {
@@ -44,6 +43,7 @@
         background-color: a.$secondary-color;
         color: a.$primary-color;
         padding: 0.75rem 1.5rem;
+        transition: transform 150ms ease;
         
         &:hover {
             transform: translateY(-2px);
@@ -54,9 +54,10 @@
         transform: scale(1);   
         transition: all 0.3s ease;
         color: a.$primary-color;
+        transition: transform 150ms ease;
 
         &:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
     }
 
@@ -82,25 +83,19 @@
         margin-top: 0;
         opacity: 0;
         transform: translateY(20px);
-        animation: slideUp 0.3s 0.1s forwards;
+        animation: slideUp 0.3s forwards;
+        animation-delay: 0.1s;
     }
 }
 
 @keyframes slideUp {
-    to {
+    100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
 @media screen and (min-width: 768px) {
-    #guess-container {
-        min-height: 250px;
-        max-height: 250px;
-    }
-}
-
-@media screen and (min-width: 1200px) {
     #guess-container {
         min-height: 250px;
         max-height: 250px;

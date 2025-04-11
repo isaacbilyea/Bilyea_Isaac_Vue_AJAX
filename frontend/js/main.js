@@ -27,13 +27,9 @@ const app = Vue.createApp({
                 joke: '',
                 category_id: '1'
             },
-            selectedJoke: null
-        }
-    },
-
-    computed: {
-        formattedJoke() {
-            return this.currentJoke ? `"${this.currentJoke}"` : '';
+            selectedJoke: null,
+            score: 0,
+            totalGuesses: 0
         }
     },
 
@@ -41,10 +37,13 @@ const app = Vue.createApp({
         resetToLanding() {
             this.showGame = false;
             this.showAllJokes = false;
+            this.getRandomJoke();
             document.body.classList.remove('game-active', 'dad-reveal', 'ai-reveal');
         },
 
         startGame() {
+            this.score = 0;
+            this.totalGuesses = 0;
             this.showGame = true;
             document.body.classList.add('game-active');
             
@@ -93,8 +92,10 @@ const app = Vue.createApp({
         },
 
         makeGuess(guessType) {
+            this.totalGuesses++;
             if (guessType.toLowerCase() === this.currentJokeType.toLowerCase()) {
                 this.guessResult = 'Correct!';
+                this.score++;
             } else {
                 this.guessResult = 'Wrong!';
             }
@@ -122,7 +123,7 @@ const app = Vue.createApp({
             })
             .catch(error => console.error(error));
         },
-
+        
         saveJoke() {
             fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/add', {
                 method: 'POST',
@@ -147,11 +148,25 @@ const app = Vue.createApp({
 
         showJokeDetail(joke) {
             this.selectedJoke = joke;
+            
+            gsap.from("#modal-content", {
+                scale: 0,
+                opacity: 0,
+                duration: 0.3,
+                ease: "back.out(1.7)"
+            });
         },
 
         closeModal() {
-            this.selectedJoke = null;
+            gsap.to("#modal-content", {
+                scale: 0,
+                opacity: 0,
+                duration: 0.2,
+                ease: "power2.in",
+                onComplete: () => {
+                    this.selectedJoke = null;
+                }
+            });
         }
     }
 }).mount('#app');
-

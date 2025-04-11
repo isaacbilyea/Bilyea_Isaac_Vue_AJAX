@@ -44,8 +44,12 @@
             background-color: a.$secondary-color;
             color: a.$primary-color;
             border: none;
-    
             font-family: a.$body-font-family;
+            transition: transform 150ms ease;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
         }
     }
 

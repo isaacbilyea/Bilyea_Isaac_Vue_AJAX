@@ -24,7 +24,6 @@ body {
     background-size: 100vw;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    transition: background-image 1s ease;
 
     &::before, &::after {
         content: '';
