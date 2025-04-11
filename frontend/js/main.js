@@ -3,12 +3,13 @@ const app = Vue.createApp({
         fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes')
         .then(response => response.json())
         .then(data => {
-            if (data.length > 0) {
+            if(data.length > 0) {
                 this.jokesData = data;
+                this.loadingJokes = false;
             } else {
                 this.errors = "No jokes found";
+                this.loadingJokes = false;
             }
-            this.loadingJokes = false;
         })
         .catch(error => {
             console.error(error);
@@ -134,6 +135,14 @@ const app = Vue.createApp({
         },
         
         addJoke() {
+            if (!this.newJoke.joke.trim()) {
+                this.errors = "Please enter a joke";
+                return;
+            }
+
+            this.loading = true;
+            this.errors = ''; // Reset error before fetch
+            
             fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/add', {
                 method: 'POST',
                 headers: {
@@ -159,32 +168,35 @@ const app = Vue.createApp({
                 } else {
                     this.errors = "Failed to add joke";
                 }
+                this.loading = false;
             })
             .catch(error => {
                 console.error(error);
                 this.errors = "Failed to add joke";
+                this.loading = false;
             });
         },
 
         showJokeDetail(joke) {
             this.loading = true;
+            this.errors = ''; // Reset error before fetch
             
             fetch(`http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/${joke.id}`)
             .then(response => response.json())
             .then(data => {
-                if (data.length > 0) {
+                if(data.length > 0) {
                     this.selectedJoke = data[0];
-                    this.loading = false;
-                    
-                    gsap.from("#modal-content", {
-                        scale: 0,
-                        opacity: 0,
-                        duration: 0.2,
-                        ease: "back.out(1.7)"
-                    });
                 } else {
-                    this.errors = "Joke not found";
+                    this.errors = "No joke found with the given query";
                 }
+                this.loading = false;
+                
+                gsap.from("#modal-content", {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 0.2,
+                    ease: "back.out(1.7)"
+                });
             })
             .catch(error => {
                 console.error(error);

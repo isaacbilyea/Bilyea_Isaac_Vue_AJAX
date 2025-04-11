@@ -17,9 +17,51 @@
 
 <body>
     <main id="app" v-cloak>
-        <div v-if="errors" class="error-message">{{ errors }}</div>
-
         <h1 class="hidden">Dad vs AI - Joke Guessing Game</h1>
+
+        <!--Loading & Error States-->
+        <div v-if="errors" class="error-message">{{ errors }}</div>
+        <div v-if="loadingJokes || loadingAllJokes || loading" class="loader">
+            <p class="loading-text">Loading</p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"
+                style="shape-rendering: auto; display: block;" width="75" height="75"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g>
+                    <g>
+                        <circle fill="#000000" r="4" cy="50" cx="60">
+                            <animate begin="-0.67s" keyTimes="0;1" values="95;35" dur="1s" repeatCount="indefinite"
+                                attributeName="cx"></animate>
+                            <animate begin="-0.67s" keyTimes="0;0.2;1" values="0;1;1" dur="1s" repeatCount="indefinite"
+                                attributeName="fill-opacity"></animate>
+                        </circle>
+                        <circle fill="#000000" r="4" cy="50" cx="60">
+                            <animate begin="-0.33s" keyTimes="0;1" values="95;35" dur="1s" repeatCount="indefinite"
+                                attributeName="cx"></animate>
+                            <animate begin="-0.33s" keyTimes="0;0.2;1" values="0;1;1" dur="1s" repeatCount="indefinite"
+                                attributeName="fill-opacity"></animate>
+                        </circle>
+                        <circle fill="#000000" r="4" cy="50" cx="60">
+                            <animate begin="0s" keyTimes="0;1" values="95;35" dur="1s" repeatCount="indefinite"
+                                attributeName="cx"></animate>
+                            <animate begin="0s" keyTimes="0;0.2;1" values="0;1;1" dur="1s" repeatCount="indefinite"
+                                attributeName="fill-opacity"></animate>
+                        </circle>
+                    </g>
+                    <g transform="translate(-15 0)">
+                        <path transform="rotate(90 50 50)" fill="#000000" d="M50 50L20 50A30 30 0 0 0 80 50Z"></path>
+                        <path fill="#000000" d="M50 50L20 50A30 30 0 0 0 80 50Z">
+                            <animatetransform keyTimes="0;0.5;1" values="0 50 50;45 50 50;0 50 50" dur="1s"
+                                repeatCount="indefinite" type="rotate" attributeName="transform"></animatetransform>
+                        </path>
+                        <path fill="#000000" d="M50 50L20 50A30 30 0 0 1 80 50Z">
+                            <animatetransform keyTimes="0;0.5;1" values="0 50 50;-45 50 50;0 50 50" dur="1s"
+                                repeatCount="indefinite" type="rotate" attributeName="transform"></animatetransform>
+                        </path>
+                    </g>
+                    <g></g>
+                </g>
+            </svg>
+        </div>
 
         <!--Landing Page-->
         <div id="landing-container" :class="{ 'active': showGame || showAllJokes }">
@@ -71,21 +113,18 @@
                     <button @click="addJoke">Add Joke</button>
                 </div>
             </div>
-
-            <div v-if="loadingAllJokes" class="loading">Loading...</div>
-            <div v-else class="jokes-grid">
+            <div class="jokes-grid">
                 <div v-for="joke in allJokes" class="joke-card" @click="showJokeDetail(joke)">
                     <p class="joke-text">"{{ joke.joke }}"</p>
                     <span class="joke-type">{{ joke.category }}</span>
                 </div>
             </div>
 
-            <div id="modal" v-if="selectedJoke || loading" @click="closeModal">
+            <div id="modal" v-if="selectedJoke" @click="closeModal">
                 <div id="modal-content">
                     <span id="close-button" @click="closeModal">&times;</span>
                     <div id="modal-body">
-                        <div v-if="loading" class="loading">Loading...</div>
-                        <div v-else>
+                        <div>
                             <p id="modal-joke-text">{{ selectedJoke.joke }}</p>
                             <p id="modal-joke-category">{{ selectedJoke.category }}</p>
                             <img :src="`images/${selectedJoke.category === 'Dad' ? 'dad.png' : 'ai.png'}`"
