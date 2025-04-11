@@ -3,10 +3,18 @@ const app = Vue.createApp({
         fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes')
         .then(response => response.json())
         .then(data => {
-            this.jokesData = data;
+            if (data.length > 0) {
+                this.jokesData = data;
+            } else {
+                this.errors = "No jokes found";
+            }
             this.loadingJokes = false;
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            console.error(error);
+            this.errors = "Failed to load jokes";
+            this.loadingJokes = false;
+        });
     },
 
     data() {
@@ -111,10 +119,18 @@ const app = Vue.createApp({
             fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes')
             .then(response => response.json())
             .then(data => {
-                this.allJokes = data;
+                if (data.length > 0) {
+                    this.allJokes = data;
+                } else {
+                    this.errors = "No jokes found";
+                }
                 this.loadingAllJokes = false;
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                this.errors = "Failed to load jokes";
+                this.loadingAllJokes = false;
+            });
         },
         
         addJoke() {
@@ -127,28 +143,36 @@ const app = Vue.createApp({
             })
             .then(response => response.json())
             .then(data => {
-                const category = this.newJoke.category_id === '1' ? 'Dad' : 'AI';
-                const imageUrl = category.toLowerCase() + '.png';
+                if(data) {
+                    const category = this.newJoke.category_id === '1' ? 'Dad' : 'AI';
+                    const imageUrl = category.toLowerCase() + '.png';
                 
-                this.allJokes.unshift({
-                    id: data.id,
-                    joke: data.joke,
-                    category: category,
-                    image_url: imageUrl
-                });
+                    this.allJokes.unshift({
+                        id: data.id,
+                        joke: data.joke,
+                        category: category,
+                        image_url: imageUrl
+                    });
 
-                this.newJoke.joke = '';
-                this.newJoke.category_id = '1';
+                    this.newJoke.joke = '';
+                    this.newJoke.category_id = '1';
+                } else {
+                    this.errors = "Failed to add joke";
+                }
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                this.errors = "Failed to add joke";
+            });
         },
 
         showJokeDetail(joke) {
             this.loading = true;
             
             fetch(`http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/${joke.id}`)
-                .then(response => response.json())
-                .then(data => {
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
                     this.selectedJoke = data[0];
                     this.loading = false;
                     
@@ -158,11 +182,15 @@ const app = Vue.createApp({
                         duration: 0.2,
                         ease: "back.out(1.7)"
                     });
-                })
-                .catch(error => {
-                    console.error(error);
-                    this.loading = false;
-                });
+                } else {
+                    this.errors = "Joke not found";
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                this.errors = "Failed to load joke details";
+                this.loading = false;
+            });
         },
 
         closeModal() {
