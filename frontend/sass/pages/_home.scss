@@ -14,7 +14,7 @@
     margin-top: 15vh;
 }
 
-#home-btn {
+#back-btn {
     position: fixed;
     top: 1rem;
     left: 1rem;
@@ -24,8 +24,6 @@
     color: white;
     border: none;
     cursor: pointer;
-    font-family: 'VT323', Monospace;
-    z-index: 100;
     transition: transform 150ms ease;
     animation: fadeIn 0.5s ease forwards;
     transform: translateY(0);

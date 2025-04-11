@@ -11,25 +11,29 @@ const app = Vue.createApp({
 
     data() {
         return {
+            //Game Properties
             jokesData: [],
+            showGame: false,
+            showResult: false,
             currentJoke: '',
             currentJokeType: '',
-            loadingJokes: true,
-            loading: false,
             guessResult: '',
-            showResult: false,
-            showGame: false,
-            showAllJokes: false,
+            score: 0,
+            totalGuesses: 0,
+            //All Jokes Properties
             allJokes: [],
-            loadingAllJokes: false,
+            showAllJokes: false,
             showAddForm: true,
             newJoke: {
                 joke: '',
                 category_id: '1'
             },
-            selectedJoke: null,
-            score: 0,
-            totalGuesses: 0
+            selectedJoke: '',
+            //Loading & Error States
+            errors: '',
+            loading: false,
+            loadingJokes: true,
+            loadingAllJokes: false
         }
     },
 
@@ -41,17 +45,23 @@ const app = Vue.createApp({
             document.body.classList.remove('game-active', 'dad-reveal', 'ai-reveal');
         },
 
+        //Game Methods
         startGame() {
             this.score = 0;
             this.totalGuesses = 0;
             this.showGame = true;
             document.body.classList.add('game-active');
-            
+            this.getRandomJoke();
+        },
+        
+        getRandomJoke() {
             const randomIndex = Math.floor(Math.random() * this.jokesData.length);
             const randomJoke = this.jokesData[randomIndex];
             
-            this.currentJokeType = randomJoke.category === 'Dad' ? 'Dad' : 'AI';
-            
+            const jokeCategory = randomJoke.category === 'Dad' ? 'Dad' : 'AI';
+            this.currentJokeType = jokeCategory;
+            this.showResult = false;
+        
             setTimeout(() => {
                 const charsPerSecond = 40;
                 const duration = randomJoke.joke.length / charsPerSecond;
@@ -62,33 +72,6 @@ const app = Vue.createApp({
                     ease: "none"
                 });
             }, 300);
-        },
-        
-        getRandomJoke() {
-            const randomIndex = Math.floor(Math.random() * this.jokesData.length);
-            const randomJoke = this.jokesData[randomIndex];
-            
-            this.currentJokeType = randomJoke.category === 'Dad' ? 'Dad' : 'AI';
-            this.showResult = false;
-            
-            const charsPerSecond = 40;
-            const duration = randomJoke.joke.length / charsPerSecond;
-            
-            const tl = gsap.timeline();
-            tl.to("#joke-text", {
-                duration: 0.3,
-                opacity: 0,
-                ease: "power2.in"
-            }).set("#joke-text", {
-                text: ""
-            }).to("#joke-text", {
-                opacity: 1,
-                duration: 0.3
-            }).to("#joke-text", {
-                duration: duration,
-                text: `"${randomJoke.joke}"`,
-                ease: "none"
-            });
         },
 
         makeGuess(guessType) {
@@ -107,13 +90,23 @@ const app = Vue.createApp({
 
         nextJoke() {
             document.body.classList.remove('dad-reveal', 'ai-reveal');
-            this.getRandomJoke();
+            const jokeText = document.querySelector("#joke-text");
+
+            gsap.to(jokeText, {
+                opacity: 0,
+                duration: 0.1,
+                onComplete: () => {
+                    jokeText.textContent = "";
+                    gsap.set(jokeText, { opacity: 1 });
+                    this.getRandomJoke();
+                }
+            });
         },
 
+        //All Jokes Methods
         showJokes() {
             this.loadingAllJokes = true;
             this.showAllJokes = true;
-            this.showGame = false;
             
             fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes')
             .then(response => response.json())
@@ -124,7 +117,7 @@ const app = Vue.createApp({
             .catch(error => console.error(error));
         },
         
-        saveJoke() {
+        addJoke() {
             fetch('http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/add', {
                 method: 'POST',
                 headers: {
@@ -134,12 +127,16 @@ const app = Vue.createApp({
             })
             .then(response => response.json())
             .then(data => {
-                return fetch(`http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/${data.id}`);
-            })
-            .then(response => response.json())
-            .then(data => {
-                this.allJokes.unshift(data[0]); 
-                this.showAddForm = false;
+                const category = this.newJoke.category_id === '1' ? 'Dad' : 'AI';
+                const imageUrl = category.toLowerCase() + '.png';
+                
+                this.allJokes.unshift({
+                    id: data.id,
+                    joke: data.joke,
+                    category: category,
+                    image_url: imageUrl
+                });
+
                 this.newJoke.joke = '';
                 this.newJoke.category_id = '1';
             })
@@ -147,14 +144,25 @@ const app = Vue.createApp({
         },
 
         showJokeDetail(joke) {
-            this.selectedJoke = joke;
+            this.loading = true;
             
-            gsap.from("#modal-content", {
-                scale: 0,
-                opacity: 0,
-                duration: 0.3,
-                ease: "back.out(1.7)"
-            });
+            fetch(`http://localhost:8888/Bilyea_Isaac_Vue_AJAX/backend/public/jokes/${joke.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.selectedJoke = data[0];
+                    this.loading = false;
+                    
+                    gsap.from("#modal-content", {
+                        scale: 0,
+                        opacity: 0,
+                        duration: 0.2,
+                        ease: "back.out(1.7)"
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    this.loading = false;
+                });
         },
 
         closeModal() {
@@ -164,7 +172,7 @@ const app = Vue.createApp({
                 duration: 0.2,
                 ease: "power2.in",
                 onComplete: () => {
-                    this.selectedJoke = null;
+                    this.selectedJoke = '';
                 }
             });
         }
